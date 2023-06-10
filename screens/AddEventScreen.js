@@ -51,7 +51,8 @@ const AddEventScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList>
+      {/* <FlatList> */}
+        <ScrollView>
       <Text style={styles.title}>Add Event</Text>
 
 <TextInput
@@ -218,8 +219,9 @@ const AddEventScreen = () => {
 )}
 
 {/* Add Notice Button */}
-<Button title="Add Notice" onPress={handleAddEvent} />
-      </FlatList>
+<Button title="Add Event" onPress={handleAddEvent} />
+        </ScrollView>
+      {/* </FlatList> */}
     </SafeAreaView>
   );
 };

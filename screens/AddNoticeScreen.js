@@ -3,9 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, ScrollView, SafeAreaView } f
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { NoticeContext } from '../Backend/NoticeContext';
-import { FlatList } from '@react-navigation/native';
 
-const AddNoticeScreen = () => {
+function AddNoticeScreen() {
   const { addNotice } = useContext(NoticeContext);
 
   const [selectedOption, setSelectedOption] = useState([]);
@@ -52,134 +51,112 @@ const AddNoticeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList>
-      <Text style={styles.title}>Add Notice</Text>
+      {/* <FlatList> */}
+        <ScrollView>
+        <Text style={styles.title}>Add Notice</Text>
 
-<TextInput
-  style={styles.input}
-  placeholder="Notice Name"
-  value={noticeData.noticeName}
-  onChangeText={(text) =>
-    setNoticeData({ ...noticeData, noticeName: text })
-  }
-/>
+        <TextInput
+          style={styles.input}
+          placeholder="Notice Name"
+          value={noticeData.noticeName}
+          onChangeText={(text) => setNoticeData({ ...noticeData, noticeName: text })} />
 
 
-<TextInput
-  style={styles.input}
-  placeholder="Notice ID"
-  value={noticeData.noticeID}
-  onChangeText={(text) =>
-    setNoticeData({ ...noticeData, noticeID: text })
-  }
-/>
+        <TextInput
+          style={styles.input}
+          placeholder="Notice ID"
+          value={noticeData.noticeID}
+          onChangeText={(text) => setNoticeData({ ...noticeData, noticeID: text })} />
 
 
-<TextInput
-  style={styles.input}
-  placeholder="Authorized By"
-  value={noticeData.authorizedBy}
-  onChangeText={(text) =>
-    setNoticeData({ ...noticeData, authorizedBy: text })
-  }
-/>
+        <TextInput
+          style={styles.input}
+          placeholder="Authorized By"
+          value={noticeData.authorizedBy}
+          onChangeText={(text) => setNoticeData({ ...noticeData, authorizedBy: text })} />
 
 
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Concerned Faculty"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, concernedFaculty: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Notice Date"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, noticeDate: item.value })
-  }
-/>
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Concerned Faculty"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) => setNoticeData({ ...noticeData, concernedFaculty: item.value })} />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Notice Date"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) => setNoticeData({ ...noticeData, noticeDate: item.value })} />
 
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Issued For"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, issuedFor: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Viewed By"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, viewedBy: item.value })
-  }
-/>
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Issued For"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) => setNoticeData({ ...noticeData, issuedFor: item.value })} />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Viewed By"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) => setNoticeData({ ...noticeData, viewedBy: item.value })} />
 
-{/* Rest of the options and input fields... */}
+        {/* Rest of the options and input fields... */}
 
-{/* Add Description */}
-<Text style={styles.label}>Description:</Text>
-<TextInput
-  style={styles.input}
-  multiline
-  value={noticeData.description}
-  onChangeText={(text) =>
-    setNoticeData({ ...noticeData, description: text })
-  }
-/>
+        {/* Add Description */}
+        <Text style={styles.label}>Description:</Text>
+        <TextInput
+          style={styles.input}
+          multiline
+          value={noticeData.description}
+          onChangeText={(text) => setNoticeData({ ...noticeData, description: text })} />
 
-{/* Upload Document */}
-<Text style={styles.label}>Upload Document:</Text>
-<Button title="Upload File" onPress={handleFileUpload} />
+        {/* Upload Document */}
+        <Text style={styles.label}>Upload Document:</Text>
+        <Button title="Upload File" onPress={handleFileUpload} />
 
-{/* Uploaded File Display */}
-{uploadedFile && (
-  <View style={styles.uploadedFileContainer}>
-    <Text style={styles.uploadedFileText}>Uploaded File:</Text>
-    <View style={styles.uploadedFileNameContainer}>
-      <Text style={styles.uploadedFileName}>{uploadedFile.name}</Text>
-    </View>
-  </View>
-)}
+        {/* Uploaded File Display */}
+        {uploadedFile && (
+          <View style={styles.uploadedFileContainer}>
+            <Text style={styles.uploadedFileText}>Uploaded File:</Text>
+            <View style={styles.uploadedFileNameContainer}>
+              <Text style={styles.uploadedFileName}>{uploadedFile.name}</Text>
+            </View>
+          </View>
+        )}
 
-{/* Add Notice Button */}
-<Button title="Add Notice" onPress={handleAddNotice} />
-      </FlatList>
+        {/* Add Notice Button */}
+        <Button title="Add Notice" onPress={handleAddNotice} />
+        </ScrollView>
+      {/* </FlatList> */}
     </SafeAreaView>
   );
-};
+}
 
 // Styles...
 const styles = StyleSheet.create({
