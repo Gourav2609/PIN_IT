@@ -9,15 +9,19 @@ const AddEventScreen = () => {
 
   const [selectedOption, setSelectedOption] = useState([]);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [noticeData, setNoticeData] = useState({
-    noticeName: '',
-    noticeID: '',
-    authorizedBy: '',
-    concernedFaculty: '',
-    noticeDate: '',
-    issuedFor: '',
+  const [eventData, setEventData] = useState({
+    eventName: '',
+    condunctedBy: '',
+    eventStartDate: '',
+    eventEndDate: '',
+    startingTime: '',
+    endingTIme: '',
+    enterVenue: '',
     viewedBy: '',
-    description: '',
+    enterLink:' ',
+    enterCaption:' ',
+    description:' ',
+
   });
 
   const handleOptionChange = (option) => {
@@ -32,19 +36,22 @@ const AddEventScreen = () => {
   };
 
   const handleAddEvent = () => {
-    addNotice(noticeData);
+    addNotice(eventData);
     // navigation.navigate('ViewNotice');
-    console.log(noticeData);
+    console.log(eventData);
     // Reset notice data and other fields
     setNoticeData({
-      noticeName: '',
-      noticeID: '',
-      authorizedBy: '',
-      concernedFaculty: '',
-      noticeDate: '',
-      issuedFor: '',
-      viewedBy: '',
-      description: '',
+      eventName: '',
+     condunctedBy: '',
+     eventStartDate: '',
+     eventEndDate: '',
+     startingTime: '',
+     endingTIme: '',
+     enterVenue: '',
+     viewedBy: '',
+     enterLink:' ',
+     enterCaption:' ',
+     description:' ',
     });
     setUploadedFile(null);
   };
@@ -60,7 +67,7 @@ const AddEventScreen = () => {
   placeholder="Event Name"
   value={noticeData.noticeName}
   onChangeText={(text) =>
-    setNoticeData({ ...noticeData, noticeName: text })
+    setNoticeData({ ...eventData, noticeName: text })
   }
 />
 
@@ -76,7 +83,7 @@ const AddEventScreen = () => {
   itemStyle={styles.dropdownItem}
   dropDownStyle={styles.dropdownMenu}
   onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, concernedFaculty: item.value })
+    setNoticeData({ ...eventData, concernedFaculty: item.value })
   }
 />
 <DropDownPicker
@@ -107,7 +114,7 @@ const AddEventScreen = () => {
   itemStyle={styles.dropdownItem}
   dropDownStyle={styles.dropdownMenu}
   onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, issuedFor: item.value })
+    setNoticeData({ ...eventData, issuedFor: item.value })
   }
 />
 <DropDownPicker
@@ -137,7 +144,7 @@ const AddEventScreen = () => {
   itemStyle={styles.dropdownItem}
   dropDownStyle={styles.dropdownMenu}
   onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, viewedBy: item.value })
+    setNoticeData({ ...eventData, viewedBy: item.value })
   }
 />
 <DropDownPicker
@@ -152,7 +159,7 @@ const AddEventScreen = () => {
   itemStyle={styles.dropdownItem}
   dropDownStyle={styles.dropdownMenu}
   onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, viewedBy: item.value })
+    setNoticeData({ ...eventData, viewedBy: item.value })
   }
 />
 <DropDownPicker
@@ -167,7 +174,7 @@ const AddEventScreen = () => {
   itemStyle={styles.dropdownItem}
   dropDownStyle={styles.dropdownMenu}
   onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, viewedBy: item.value })
+    setNoticeData({ ...eventData, viewedBy: item.value })
   }
 />
 
@@ -177,7 +184,7 @@ const AddEventScreen = () => {
   placeholder="Enter Link"
   value={noticeData.noticeName}
   onChangeText={(text) =>
-    setNoticeData({ ...noticeData, noticeName: text })
+    setNoticeData({ ...eventData, noticeName: text })
   }
 />
 
@@ -186,7 +193,7 @@ const AddEventScreen = () => {
   placeholder="Enter Caption"
   value={noticeData.noticeName}
   onChangeText={(text) =>
-    setNoticeData({ ...noticeData, noticeName: text })
+    setNoticeData({ ...eventData, noticeName: text })
   }
 />  
 
@@ -200,7 +207,7 @@ const AddEventScreen = () => {
   multiline
   value={noticeData.description}
   onChangeText={(text) =>
-    setNoticeData({ ...noticeData, description: text })
+    setNoticeData({ ...eventData, description: text })
   }
 />
 
