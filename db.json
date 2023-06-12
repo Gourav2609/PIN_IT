@@ -1,0 +1,49 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "noticedata": [
+    {
+      "id": 1,
+      "condunctedBy": "",
+      "description": " Ehhwbe",
+      "endingTime": "",
+      "enterCaption": " Gahnabs",
+      "enterLink": " ",
+      "enterVenue": "",
+      "eventEndDate": "",
+      "eventName": "Goirav",
+      "eventStartDate": "",
+      "startingTime": "",
+      "viewedBy": ""
+    },
+    {
+      "id": 2,
+      "condunctedBy": "",
+      "description": " Ehhwbe",
+      "endingTime": "",
+      "enterCaption": " Gahnabs",
+      "enterLink": " ",
+      "enterVenue": "",
+      "eventEndDate": "",
+      "eventName": "Goirav",
+      "eventStartDate": "",
+      "startingTime": "",
+      "viewedBy": ""
+    }
+  ]
+}

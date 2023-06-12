@@ -1,28 +1,30 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet,SafeAreaView,ScrollView, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as DocumentPicker from 'expo-document-picker';
-import { NoticeContext } from '../Backend/NoticeContext';
+import { EventContext } from '../Backend/EventContext';
+import axios from 'axios';
 
 const AddEventScreen = () => {
-  const { addNotice } = useContext(NoticeContext);
+  const { addEvent } = useContext(EventContext);
 
   const [selectedOption, setSelectedOption] = useState([]);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [idCount,setIdCount] = useState(1);
   const [eventData, setEventData] = useState({
     eventName: '',
     condunctedBy: '',
     eventStartDate: '',
     eventEndDate: '',
     startingTime: '',
-    endingTIme: '',
+    endingTime: '',
     enterVenue: '',
     viewedBy: '',
-    enterLink:' ',
-    enterCaption:' ',
-    description:' ',
-
+    enterLink: ' ',
+    enterCaption: ' ',
+    description: ' ',
   });
+
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -34,24 +36,32 @@ const AddEventScreen = () => {
       setUploadedFile(file);
     }
   };
-
+  const serverUrl = "http://localhost:3000/noticedata";
+  const header = {
+    "Content-Type": "application/json"
+  }
   const handleAddEvent = () => {
-    addNotice(eventData);
+    addEvent(eventData);
     // navigation.navigate('ViewNotice');
+    // setEventData({ ...eventData, id: 3 })
     console.log(eventData);
+      // eventData.append(idCount)
+      // eventData = [...eventData, {"id": 3}]
+      axios.post(serverUrl,eventData,header).catch(error => console.log(error));
+    // console.log(eventData);
     // Reset notice data and other fields
-    setNoticeData({
+    setEventData({
       eventName: '',
-     condunctedBy: '',
-     eventStartDate: '',
-     eventEndDate: '',
-     startingTime: '',
-     endingTIme: '',
-     enterVenue: '',
-     viewedBy: '',
-     enterLink:' ',
-     enterCaption:' ',
-     description:' ',
+      condunctedBy: '',
+      eventStartDate: '',
+      eventEndDate: '',
+      startingTime: '',
+      endingTime: '',
+      enterVenue: '',
+      viewedBy: '',
+      enterLink: ' ',
+      enterCaption: ' ',
+      description: ' ',
     });
     setUploadedFile(null);
   };
@@ -59,175 +69,175 @@ const AddEventScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <FlatList> */}
-        <ScrollView>
-      <Text style={styles.title}>Add Event</Text>
+      <ScrollView>
+        <Text style={styles.title}>Add Event</Text>
 
-<TextInput
-  style={styles.input}
-  placeholder="Event Name"
-  value={noticeData.noticeName}
-  onChangeText={(text) =>
-    setNoticeData({ ...eventData, noticeName: text })
-  }
-/>
+        <TextInput
+          style={styles.input}
+          placeholder="Event Name"
+          value={eventData.eventName}
+          onChangeText={(text) =>
+            setEventData({ ...eventData, eventName: text })
+          }
+        />
 
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Conducted By"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...eventData, concernedFaculty: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Event Start Date"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, noticeDate: item.value })
-  }
-/>
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Conducted By"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, conductedBy: item.value })
+          }
+        />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Event Start Date"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, eventStartDate: item.value })
+          }
+        />
 
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Event End Date"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...eventData, issuedFor: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Starting Time"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...noticeData, viewedBy: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Ending Time"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...eventData, viewedBy: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Enter Venue"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...eventData, viewedBy: item.value })
-  }
-/>
-<DropDownPicker
-  items={[
-    { label: 'All HODS', value: 'all_hods' },
-    { label: 'Director', value: 'director' },
-  ]}
-  defaultValue={selectedOption}
-  placeholder="Viewed By"
-  containerStyle={styles.dropdownContainer}
-  style={styles.dropdown}
-  itemStyle={styles.dropdownItem}
-  dropDownStyle={styles.dropdownMenu}
-  onChangeItem={(item) =>
-    setNoticeData({ ...eventData, viewedBy: item.value })
-  }
-/>
-
-
-<TextInput
-  style={styles.input}
-  placeholder="Enter Link"
-  value={noticeData.noticeName}
-  onChangeText={(text) =>
-    setNoticeData({ ...eventData, noticeName: text })
-  }
-/>
-
-<TextInput
-  style={styles.input}
-  placeholder="Enter Caption"
-  value={noticeData.noticeName}
-  onChangeText={(text) =>
-    setNoticeData({ ...eventData, noticeName: text })
-  }
-/>  
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Event End Date"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, eventEndDate: item.value })
+          }
+        />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Starting Time"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, startingTime: item.value })
+          }
+        />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Ending Time"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, endingTime: item.value })
+          }
+        />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Enter Venue"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, viewedBy: item.value })
+          }
+        />
+        <DropDownPicker
+          items={[
+            { label: 'All HODS', value: 'all_hods' },
+            { label: 'Director', value: 'director' },
+          ]}
+          defaultValue={selectedOption}
+          placeholder="Viewed By"
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownMenu}
+          onChangeItem={(item) =>
+            setEventData({ ...eventData, enterLink: item.value })
+          }
+        />
 
 
-{/* Rest of the options and input fields... */}
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Link"
+          value={eventData.enterCaption}
+          onChangeText={(text) =>
+            setEventData({ ...eventData, enterCaption: text })
+          }
+        />
 
-{/* Add Description */}
-<Text style={styles.label}>Description:</Text>
-<TextInput
-  style={styles.input}
-  multiline
-  value={noticeData.description}
-  onChangeText={(text) =>
-    setNoticeData({ ...eventData, description: text })
-  }
-/>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Caption"
+          value={eventData.description}
+          onChangeText={(text) =>
+            setEventData({ ...eventData, description: text })
+          }
+        />
 
-{/* Upload Document */}
-<Text style={styles.label}>Upload Photo:</Text>
-<Button title="Upload File" onPress={handleFileUpload} />
 
-{/* Uploaded File Display */}
-{uploadedFile && (
-  <View style={styles.uploadedFileContainer}>
-    <Text style={styles.uploadedFileText}>Uploaded Photo</Text>
-    <View style={styles.uploadedFileNameContainer}>
-      <Text style={styles.uploadedFileName}>{uploadedFile.name}</Text>
-    </View>
-  </View>
-)}
+        {/* Rest of the options and input fields... */}
 
-{/* Add Notice Button */}
-<Button title="Add Event" onPress={handleAddEvent} />
-        </ScrollView>
+        {/* Add Description */}
+        <Text style={styles.label}>Description:</Text>
+        <TextInput
+          style={styles.input}
+          multiline
+          value={eventData.description}
+          onChangeText={(text) =>
+            setEventData({ ...eventData, description: text })
+          }
+        />
+
+        {/* Upload Document */}
+        <Text style={styles.label}>Upload Photo:</Text>
+        <Button title="Upload File" onPress={handleFileUpload} />
+
+        {/* Uploaded File Display */}
+        {uploadedFile && (
+          <View style={styles.uploadedFileContainer}>
+            <Text style={styles.uploadedFileText}>Uploaded Photo</Text>
+            <View style={styles.uploadedFileNameContainer}>
+              <Text style={styles.uploadedFileName}>{uploadedFile.name}</Text>
+            </View>
+          </View>
+        )}
+
+        {/* Add Notice Button */}
+        <Button title="Add Event" onPress={handleAddEvent} />
+      </ScrollView>
       {/* </FlatList> */}
     </SafeAreaView>
   );
@@ -268,7 +278,7 @@ const styles = StyleSheet.create({
   },
   dropdownMenu: {
     backgroundColor: '#fafafa',
-    zIndex:5000,
+    zIndex: 5000,
   },
   uploadedFileContainer: {
     marginTop: 20,
