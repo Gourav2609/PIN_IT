@@ -2,17 +2,29 @@
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} from "firebase/auth";
+import firebaseConfig from '../Backend/FirebaseConfig';
+import { initializeApp } from 'firebase/app';
 
 const AdminLoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+
+  
   const handleLogin = () => {
-    if (username === '1' && password === '1') {
-      navigation.navigate('AdminDashboard');
-    } else {
-      alert("The Username is 1 and password is same is username");
-    }
+    const auth = getAuth();
+               signInWithEmailAndPassword(auth, username ,password).then((response)=>
+               {
+                navigation.navigate('AdminDashboard');
+                // sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken);
+               }).catch((error)=>{
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert('user does not exist');
+                    console.log(error);
+               })
+   
   };
 
   return (
