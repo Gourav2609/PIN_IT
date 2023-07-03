@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import * as DocumentPicker from 'expo-document-picker';
-import { NoticeContext } from '../Backend/NoticeContext';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../Backend/FirebaseConfig';
+// import { navigation } from "react-navigation";
+
 
 function AddNoticeScreen() {
-  const { addNotice } = useContext(NoticeContext);
+  // const navigation = useNavigation();
 
-  const [selectedOption, setSelectedOption] = useState([]);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [noticeData, setNoticeData] = useState({
     noticeName: '',
@@ -20,121 +21,105 @@ function AddNoticeScreen() {
     description: '',
   });
 
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  };
-
   const handleFileUpload = async () => {
     const file = await DocumentPicker.getDocumentAsync();
     if (file.type === 'success') {
       setUploadedFile(file);
     }
   };
+  // const toViewNoice = () =>{
+  //     navigation.navigate('ViewNotice');
+  // }
 
-  const handleAddNotice = () => {
-    addNotice(noticeData);
-    // navigation.navigate('ViewNotice');
-    console.log(noticeData);
-    // Reset notice data and other fields
-    setNoticeData({
-      noticeName: '',
-      noticeID: '',
-      authorizedBy: '',
-      concernedFaculty: '',
-      noticeDate: '',
-      issuedFor: '',
-      viewedBy: '',
-      description: '',
-    });
-    setUploadedFile(null);
+  const handleAddNotice = async () => {
+    try {
+      // Add notice to Firestore
+      await addDoc(collection(db, 'notices'), noticeData);
+      // Reset notice data and other fields
+      setNoticeData({
+        noticeName: '',
+        noticeID: '',
+        authorizedBy: '',
+        concernedFaculty: '',
+        noticeDate: '',
+        issuedFor: '',
+        viewedBy: '',
+        description: '',
+      });
+      // toViewNoice();
+      setUploadedFile(null);
+      console.log('Data was successfully sent');
+      // navigation.navigate('ViewNotice')
+    } catch (error) {
+      console.error('Error adding notice to Firestore:', error);
+      // Handle the error as per your application's requirements
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <FlatList> */}
-        <ScrollView>
+      <ScrollView>
         <Text style={styles.title}>Add Notice</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Notice Name"
           value={noticeData.noticeName}
-          onChangeText={(text) => setNoticeData({ ...noticeData, noticeName: text })} />
-
+          onChangeText={(text) => setNoticeData({ ...noticeData, noticeName: text })}
+        />
 
         <TextInput
           style={styles.input}
           placeholder="Notice ID"
           value={noticeData.noticeID}
-          onChangeText={(text) => setNoticeData({ ...noticeData, noticeID: text })} />
-
+          onChangeText={(text) => setNoticeData({ ...noticeData, noticeID: text })}
+        />
 
         <TextInput
           style={styles.input}
           placeholder="Authorized By"
           value={noticeData.authorizedBy}
-          onChangeText={(text) => setNoticeData({ ...noticeData, authorizedBy: text })} />
+          onChangeText={(text) => setNoticeData({ ...noticeData, authorizedBy: text })}
+        />
 
-
-        <DropDownPicker
-          items={[
-            { label: 'All HODS', value: 'all_hods' },
-            { label: 'Director', value: 'director' },
-          ]}
-          defaultValue={selectedOption}
+        <TextInput
+          style={styles.input}
           placeholder="Concerned Faculty"
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          dropDownStyle={styles.dropdownMenu}
-          onChangeItem={(item) => setNoticeData({ ...noticeData, concernedFaculty: item.value })} />
-        <DropDownPicker
-          items={[
-            { label: 'All HODS', value: 'all_hods' },
-            { label: 'Director', value: 'director' },
-          ]}
-          defaultValue={selectedOption}
+          value={noticeData.concernedFaculty}
+          onChangeText={(text) => setNoticeData({ ...noticeData, concernedFaculty: text })}
+        />
+
+        <TextInput
+          style={styles.input}
           placeholder="Notice Date"
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          dropDownStyle={styles.dropdownMenu}
-          onChangeItem={(item) => setNoticeData({ ...noticeData, noticeDate: item.value })} />
+          value={noticeData.noticeDate}
+          onChangeText={(text) => setNoticeData({ ...noticeData, noticeDate: text })}
+        />
 
-        <DropDownPicker
-          items={[
-            { label: 'All HODS', value: 'all_hods' },
-            { label: 'Director', value: 'director' },
-          ]}
-          defaultValue={selectedOption}
+        <TextInput
+          style={styles.input}
           placeholder="Issued For"
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          dropDownStyle={styles.dropdownMenu}
-          onChangeItem={(item) => setNoticeData({ ...noticeData, issuedFor: item.value })} />
-        <DropDownPicker
-          items={[
-            { label: 'All HODS', value: 'all_hods' },
-            { label: 'Director', value: 'director' },
-          ]}
-          defaultValue={selectedOption}
+          value={noticeData.issuedFor}
+          onChangeText={(text) => setNoticeData({ ...noticeData, issuedFor: text })}
+        />
+
+        <TextInput
+          style={styles.input}
           placeholder="Viewed By"
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          dropDownStyle={styles.dropdownMenu}
-          onChangeItem={(item) => setNoticeData({ ...noticeData, viewedBy: item.value })} />
+          value={noticeData.viewedBy}
+          onChangeText={(text) => setNoticeData({ ...noticeData, viewedBy: text })}
+        />
 
-        {/* Rest of the options and input fields... */}
-
+        {/* Rest of the input fields and components */}
+        
         {/* Add Description */}
         <Text style={styles.label}>Description:</Text>
         <TextInput
           style={styles.input}
           multiline
           value={noticeData.description}
-          onChangeText={(text) => setNoticeData({ ...noticeData, description: text })} />
+          onChangeText={(text) => setNoticeData({ ...noticeData, description: text })}
+        />
 
         {/* Upload Document */}
         <Text style={styles.label}>Upload Document:</Text>
@@ -152,8 +137,7 @@ function AddNoticeScreen() {
 
         {/* Add Notice Button */}
         <Button title="Add Notice" onPress={handleAddNotice} />
-        </ScrollView>
-      {/* </FlatList> */}
+      </ScrollView>
     </SafeAreaView>
   );
 }

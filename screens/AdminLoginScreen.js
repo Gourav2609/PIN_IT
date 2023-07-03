@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import {getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebaseConfig from '../Backend/FirebaseConfig';
 import { initializeApp } from 'firebase/app';
 
@@ -17,6 +18,7 @@ const AdminLoginScreen = ({ navigation }) => {
                signInWithEmailAndPassword(auth, username ,password).then((response)=>
                {
                 navigation.navigate('AdminDashboard');
+                console.log('successfully logged in');
                 // sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken);
                }).catch((error)=>{
                     const errorCode = error.code;
