@@ -1,11 +1,14 @@
+// ViewNoticeScreen.js
+
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../Backend/FirebaseConfig';
-
-function ViewNoticeScreen() {
+import { withNavigation } from 'react-navigation';
+// import { useNavigation } from '@react-navigation/native';
+const ViewNoticeScreen = ({ navigation }) => {
   const [notices, setNotices] = useState([]);
-
+  // const navigation = useNavigation();
   useEffect(() => {
     // Fetch notices from Firestore
     const fetchNotices = async () => {
@@ -22,22 +25,28 @@ function ViewNoticeScreen() {
     fetchNotices();
   }, []);
 
+  const handleNoticePress = (notice) => {
+    navigation.navigate('NoticeDetail', { notice :item });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={notices}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.noticeContainer}>
-            <Text style={styles.noticeTitle}>{item.noticeName}</Text>
-            <Text style={styles.noticeID}>Notice ID: {item.noticeID}</Text>
-            {/* Render other notice details as needed */}
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('NoticeDetail', { notice : item})}>
+            <View style={styles.noticeContainer}>
+              <Text style={styles.noticeTitle}>{item.noticeName}</Text>
+              <Text style={styles.noticeID}>Notice ID: {item.noticeID}</Text>
+              {/* Render other notice details as needed */}
+            </View>
+          </TouchableOpacity>
         )}
       />
     </SafeAreaView>
   );
-}
+};
 
 // Styles...
 const styles = StyleSheet.create({
@@ -51,10 +60,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    backgroundColor: '#000',
   },
   noticeTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#fff',
   },
   noticeID: {
     fontSize: 16,
@@ -62,4 +73,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Wrap the component with withNavigation
 export default ViewNoticeScreen;

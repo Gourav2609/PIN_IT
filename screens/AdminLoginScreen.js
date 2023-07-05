@@ -6,6 +6,7 @@ import {getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} f
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebaseConfig from '../Backend/FirebaseConfig';
 import { initializeApp } from 'firebase/app';
+import { LogBox } from 'react-native';
 
 const AdminLoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -23,10 +24,10 @@ const AdminLoginScreen = ({ navigation }) => {
                }).catch((error)=>{
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert('user does not exist');
+                    alert(errorMessage);
                     console.log(error);
                })
-   
+               
   };
 
   return (

@@ -29,7 +29,7 @@ const AdminDashboardScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={toggleMoreOptions}>
-          <Text style={styles.moreOptionsText}>{showMoreOptions ? '☰' : '☰'}</Text>
+          <Text style={styles.moreOptionsText}>{showMoreOptions ? '☰       Return to Menu   ' : '☰     More Options'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -41,7 +41,7 @@ const AdminDashboardScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
             <Text style={styles.optionText}>Notification</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
+          <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('ContactUs') }>
             <Text style={styles.optionText}>Contact</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.optionContainer} onPress={handleLogout}>
@@ -62,7 +62,7 @@ const AdminDashboardScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
             <Text style={styles.optionText}>View Calendar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
+          <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('ViewNotice')}>
             <Text style={styles.optionText}>View Notices</Text>
           </TouchableOpacity>
         </View>
@@ -74,6 +74,7 @@ const AdminDashboardScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: '#fcb103',
     backgroundColor: '#fcb103',
   },
   header: {

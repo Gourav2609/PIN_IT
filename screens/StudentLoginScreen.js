@@ -2,16 +2,25 @@
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import {getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} from "firebase/auth";
 
-const StudentLoginScreen = () => {
-  const [registrationNumber, setRegistrationNumber] = useState('');
+const StudentLoginScreen = ({navigation}) => {
+  const [username, setRegistrationNumber] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
-    // Handle sign-in logic here
-    console.log('Registration Number:', registrationNumber);
-    console.log('Password:', password);
-    // Add your sign-in logic using the entered registration number and password
+          const auth = getAuth();
+          signInWithEmailAndPassword(auth, username ,password).then((response)=>
+          {
+          navigation.navigate('ViewNotice');
+          console.log('successfully logged in');
+          // sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken);
+          }).catch((error)=>{
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              alert('user does not exist');
+              console.log(error);
+          })
   };
 
   return (
@@ -21,17 +30,16 @@ const StudentLoginScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Registration Number"
-          value={registrationNumber}
+          value={username}
           onChangeText={setRegistrationNumber}
-          keyboardType="numeric"
-          maxLength={5}
+          keyboardType="text"
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
+          // secureTextEntry
         />
         <Button title="Sign In" onPress={handleSignIn} />
       </View>

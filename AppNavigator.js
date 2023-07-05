@@ -10,6 +10,9 @@ import MoreOptionsScreen from './screens/MoreOptionsScreen';
 import AddNoticeScreen from './screens/AddNoticeScreen';
 import ViewNoticeScreen from './screens/ViewNoticeScreen';
 import AddEventScreen from './screens/AddEventScreen';
+import NoticeDetailScreen from './screens/ViewNoticeScreen';
+import ContactUs from './screens/ContactUs';
+
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -21,6 +24,8 @@ const MainNavigator = createStackNavigator({
   AddNotice: { screen: AddNoticeScreen },
   ViewNotice: { screen: ViewNoticeScreen },
   AddEvent:{ screen: AddEventScreen},
+  NoticeDetail :{screen : NoticeDetailScreen},
+  ContactUs: { screen : ContactUs},
 });
 
 const AppNavigator = createAppContainer(MainNavigator);
