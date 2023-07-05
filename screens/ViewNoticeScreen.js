@@ -39,6 +39,14 @@ const ViewNoticeScreen = ({ navigation }) => {
             <View style={styles.noticeContainer}>
               <Text style={styles.noticeTitle}>{item.noticeName}</Text>
               <Text style={styles.noticeID}>Notice ID: {item.noticeID}</Text>
+              <Text style={styles.noticeID}>Authorized By: {item.authorizedBy}</Text>
+              {/* <Text style={styles.text}>{item.authorizedBy}</Text> */}
+              <Text style={styles.noticeID}>Concerned Faculty: {item.concernedFaculty}</Text>
+              {/* <Text style={styles.text}>{item.concernedFaculty}</Text> */}
+             <Text style={styles.noticeID}>Notice Date: {item.noticeDate}</Text>
+             {/* <Text style={styles.text}>{item.noticeDate}</Text> */}
+             <Text style={styles.noticeID}>Issued For: {item.issuedFor}</Text>
+             {/* <Text style={styles.text}>{item.issuedFor}</Text> */}
               {/* Render other notice details as needed */}
             </View>
           </TouchableOpacity>
@@ -60,16 +68,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    backgroundColor: '#000',
+    backgroundColor: '#fcb103',
   },
   noticeTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#000',
   },
   noticeID: {
     fontSize: 16,
-    color: '#888',
+    color:'#656463',
   },
 });
 
