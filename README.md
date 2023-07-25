@@ -4,3 +4,16 @@ The project aims to provide a centralized space where updates about notices and 
 
 
 We acknowledge the collective effort and collaborative spirit of everyone involved, without whom the successful completion of this project would not have been possible. Thank you all for your unwavering support and contributions.
+
+
+We are currently uploading the undevelopement apk file here 
+
+Admin:
+ adminUsername - admin@gmail.com
+ adminPassword - admin@ait
+
+Student:
+ studentUsername - student@gmail.com
+ studentPassword - student@ait
+
+ 
