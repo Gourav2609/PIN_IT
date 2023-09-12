@@ -18,9 +18,9 @@ const AdminLoginScreen = ({ navigation }) => {
     const auth = getAuth();
                signInWithEmailAndPassword(auth, username ,password).then((response)=>
                {
+                
                 navigation.navigate('AdminDashboard');
                 console.log('successfully logged in');
-                // sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken);
                }).catch((error)=>{
                     const errorCode = error.code;
                     const errorMessage = error.message;
