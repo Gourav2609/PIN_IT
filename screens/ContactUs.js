@@ -3,8 +3,8 @@ import { View, Text, TextInput, StyleSheet, FlatList } from 'react-native';
 
 const ContactUs = () => {
   const initialContacts = [
-    { club: 'Techboard', name: 'Bhaumik Mann', phone: '7387823677' },
-    { club: 'Techboard', name: 'Khushi Dogra', phone: '9910390489' },
+    { club: 'Techboard', name: 'Vansh Vatsal', phone: '7620310340' },
+    { club: 'Techboard', name: 'Anushna Panwar', phone: '9971081972' },
     { club: 'Coding Cell', name: 'Nooka Praveen', phone: '9390639860' },
     { club: 'I&E Cell', name: 'Samik Choudhury', phone: '7586972680' },
     { club: 'I&E Cell', name: 'Tanu Sharma', phone: '8171970843' },
@@ -73,8 +73,8 @@ const ContactUs = () => {
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Text style={styles.contactName}>{item.name}</Text>
-      <Text>Club: {item.club}</Text>
-      <Text>Phone: {item.phone}</Text>
+      <Text style={styles.contactDetails}>Club: {item.club}</Text>
+      <Text style={styles.contactDetails}>Phone: {item.phone}</Text>
     </View>
   );
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fcb103',
+    backgroundColor: '#fff',
   },
   heading: {
     fontSize: 24,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor :'#fff',
   },
   card: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#635BFF',
     padding: 16,
     marginBottom: 16,
     borderRadius: 8,
@@ -128,7 +128,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color:'#fff',
   },
+  contactDetails:{
+    color:'#d9d9d9',
+  }
 });
 
 export default ContactUs;

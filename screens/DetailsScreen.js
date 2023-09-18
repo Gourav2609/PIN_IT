@@ -1,11 +1,13 @@
 // DetailScreen.js
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet , Image } from 'react-native';
 
 const DetailScreen = ({ navigation }) => {
   return (
+    
     <View style={styles.container}>
+      <View style={styles.pinDiv}><Image source={require('../assets/logo.png')} style={styles.pinImage} /></View>
       <View style={styles.box}>
         <TouchableOpacity
           style={[styles.button, styles.adminButton]}
@@ -25,7 +27,7 @@ const DetailScreen = ({ navigation }) => {
 };
 
 DetailScreen.navigationOptions = {
-  headerShown: true,
+  headerShown: false,
 };
 
 const styles = StyleSheet.create({
@@ -33,14 +35,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fcb103',
+    backgroundColor: '#fff',
   },
   box: {
     width: '80%',
     backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 10,
-    elevation: 5,
+    flex:3,
+    // elevation: 5,
   },
   button: {
     width: '100%',
@@ -51,16 +54,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   adminButton: {
-    backgroundColor: '#fcb103',
+    backgroundColor: '#635BFF',
   },
   studentButton: {
-    backgroundColor: '#fcb103',
+    backgroundColor: '#635BFF',
   },
   buttonText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#ffffff',
   },
+  pinDiv:{
+    // backgroundColor: '#000',
+    display:'flex',
+    flex:2,
+    justifyContent:'center'
+
+  },
+  pinImage:{
+      padding:10,
+  }
 });
 
 export default DetailScreen;

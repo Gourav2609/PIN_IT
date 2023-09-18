@@ -24,6 +24,9 @@ const AdminDashboardScreen = ({ navigation }) => {
       { cancelable: true }
     );
   };
+  AdminDashboardScreen.navigationOptions = {
+    headerShown: false,
+  };
 
   return (
     <View style={styles.container}>
@@ -50,18 +53,22 @@ const AdminDashboardScreen = ({ navigation }) => {
         </View>
       ) : (
         <View style={styles.dashboardContainer}>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('AddNotice')}>
-            <Text style={styles.optionText}>Add Notice</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('AddEvent')}>
-            <Text style={styles.optionText}>Add Event</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
-            <Text style={styles.optionText}>Modify Event</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.optionContainer} onPress={() => {}}>
-            <Text style={styles.optionText}>View Calendar</Text>
-          </TouchableOpacity>
+          <View style={styles.grid}>
+              <TouchableOpacity style={styles.optionContain} onPress={() => navigation.navigate('AddNotice')}>
+                <Text style={styles.optionText}>Add Notice</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.optionContain} onPress={() => navigation.navigate('AddEvent')}>
+                <Text style={styles.optionText}>Add Event</Text>
+              </TouchableOpacity>
+          </View>
+          <View style={styles.grid}>
+              <TouchableOpacity style={styles.optionContain} onPress={() => {}}>
+                <Text style={styles.optionText}>Modify Event</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.optionContain} onPress={() => {}}>
+                <Text style={styles.optionText}>View Calendar</Text>
+              </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('ViewNotice')}>
             <Text style={styles.optionText}>View Notices</Text>
           </TouchableOpacity>
@@ -75,7 +82,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: '#fcb103',
-    backgroundColor: '#fcb103',
+    backgroundColor: '#fff',
+    paddingTop:30
   },
   header: {
     paddingHorizontal: 20,
@@ -96,18 +104,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionContainer: {
-    width: '80%',
+    width: '75%',
     height: 60,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#635BFF',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
     borderRadius: 10,
+    elevation:10,
+  },
+  optionContain: {
+    width: '35%',
+    height: 100,
+    backgroundColor: '#635BFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    elevation:10,
   },
   optionText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color:'#fff',
+    // fontWeight: 'bo',
   },
+  grid:{
+    display:'flex',
+    flexDirection:'row',
+  }
 });
 
 export default AdminDashboardScreen;

@@ -70,16 +70,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    backgroundColor: '#fcb103',
+    backgroundColor: '#635BFF',
   },
   noticeTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
   },
   noticeID: {
     fontSize: 16,
-    color:'#656463',
+    color:'#d9d9d9',
   },
 });
 

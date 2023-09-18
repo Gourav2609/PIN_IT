@@ -35,7 +35,7 @@ const AdminLoginScreen = ({ navigation }) => {
       <Text style={styles.title}>Admin Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="abc@aitpune.edu.in"
         onChangeText={(text) => setUsername(text)}
         value={username}
       />
@@ -47,7 +47,7 @@ const AdminLoginScreen = ({ navigation }) => {
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
   );
@@ -67,23 +67,29 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '70%',
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderColor: '#cccccc',
-    borderRadius: 5,
+    borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#ff0000',
+    width:'70%',
+    alignContent:'center',
+    justifyContent:'center',
+    backgroundColor: '#635BFF',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 10,
+    height:50,
+    // borderRadius: 10,
   },
   buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#ffffff',
+    textAlign:'center',
   },
 });
 
