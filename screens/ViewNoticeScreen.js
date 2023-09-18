@@ -15,6 +15,7 @@ const ViewNoticeScreen = ({ navigation }) => {
       try {
         const querySnapshot = await getDocs(collection(db, 'notices'));
         const noticesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        // console.log(doc.id);
         setNotices(noticesData);
       } catch (error) {
         console.error('Error fetching notices from Firestore:', error);
@@ -27,6 +28,7 @@ const ViewNoticeScreen = ({ navigation }) => {
 
   const handleNoticePress = (notice) => {
     navigation.navigate('NoticeDetail', { notice :item });
+    console.log(notice)
   };
 
   return (

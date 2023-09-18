@@ -10,7 +10,7 @@ import MoreOptionsScreen from './screens/MoreOptionsScreen';
 import AddNoticeScreen from './screens/AddNoticeScreen';
 import ViewNoticeScreen from './screens/ViewNoticeScreen';
 import AddEventScreen from './screens/AddEventScreen';
-import NoticeDetailScreen from './screens/ViewNoticeScreen';
+import NoticeDetailScreen from './screens/NoticeDetailScreen';
 import ContactUs from './screens/ContactUs';
 
 

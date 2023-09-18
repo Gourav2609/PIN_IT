@@ -7,6 +7,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 
+let cu = 0;
+
 function AddNoticeScreen() {
   // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -14,6 +16,7 @@ function AddNoticeScreen() {
   const [showToast, setShowToast] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [noticeData, setNoticeData] = useState({
+    id: cu,
     noticeName: '',
     noticeID: '',
     authorizedBy: '',
@@ -33,6 +36,8 @@ function AddNoticeScreen() {
 
 
   const handleAddNotice = async () => {
+    cu++;
+    console.log(cu);
     try {
       // Add notice to Firestore
       setLoading(true);
@@ -48,6 +53,7 @@ function AddNoticeScreen() {
       await addDoc(collection(db, 'notices'), noticeData );
       // Reset notice data and other fields
       setNoticeData({
+        id: cu,
         noticeName: '',
         noticeID: '',
         authorizedBy: '',
@@ -70,6 +76,7 @@ function AddNoticeScreen() {
       showToastMessage;
     }
   };
+
 
   const showToastMessage = (message) => {
     setToastMessage(message);
