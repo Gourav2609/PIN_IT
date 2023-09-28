@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query , orderBy } from 'firebase/firestore';
 import { db } from '../Backend/FirebaseConfig';
 import { withNavigation } from 'react-navigation';
 // import { useNavigation } from '@react-navigation/native';
@@ -13,9 +13,9 @@ const ViewNoticeScreen = ({ navigation }) => {
     // Fetch notices from Firestore
     const fetchNotices = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'notices'));
+        const q = query(collection(db, 'notices'), orderBy('noticeDate', 'desc')); // Correct order of calls
+        const querySnapshot = await getDocs(q);
         const noticesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        // console.log(doc.id);
         setNotices(noticesData);
       } catch (error) {
         console.error('Error fetching notices from Firestore:', error);
@@ -24,6 +24,12 @@ const ViewNoticeScreen = ({ navigation }) => {
     };
 
     fetchNotices();
+
+    const interval = setInterval(() => {
+      fetchNotices();
+    }, 10000);
+    return () => clearInterval(interval);
+
   }, []);
 
   const handleNoticePress = (notice) => {

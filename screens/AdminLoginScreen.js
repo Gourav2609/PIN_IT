@@ -1,7 +1,7 @@
 // AdminLoginScreen.js
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet , ActivityIndicator } from 'react-native';
 import {getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebaseConfig from '../Backend/FirebaseConfig';
@@ -11,10 +11,12 @@ import { LogBox } from 'react-native';
 const AdminLoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [activity,setActivity] = useState(false);
 
 
   
   const handleLogin = () => {
+    setActivity(true);
     const auth = getAuth();
                signInWithEmailAndPassword(auth, username ,password).then((response)=>
                {
@@ -49,6 +51,7 @@ const AdminLoginScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
+      {activity ? <ActivityIndicator color="#0000ff" /> : null}
     </View>
   );
 };

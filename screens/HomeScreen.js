@@ -1,22 +1,26 @@
 // HomeScreen.js
 
-import React from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import React , { useEffect , useState} from 'react';
+import { View, Text, Button, StyleSheet, Image} from 'react-native';
+
 
 const HomeScreen = ({ navigation }) => {
   HomeScreen.navigationOptions = {
     headerShown: false,
   };
+  
+  useEffect(() => {
+    setTimeout(() => {
 
-  setTimeout(() => {
-
-    navigation.navigate('Details');
-  }
-  , 2500);
+      navigation.navigate('Details');
+    }
+    , 1000);
+  });
 
 
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.square}>
         <Image source={require('../assets/Pin-it.png')} style={styles.pinImage} />
