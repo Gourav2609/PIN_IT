@@ -36,6 +36,15 @@ Scan the image on your Expo Go app on Andriod
 Happy hacking
 
 
+## Logging In
+   #### ADMIN
+      Admin Username: admin@gmail.com
+      Admin Password: admin@ait
+
+   #### Student
+      Student Username: student@gmail.com
+      Student Password: student@ait
+
 ### Contributors
  We welcome contributions from the community to make PIN_IT even better. Feel free to submit issues and pull requests.
 
