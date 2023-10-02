@@ -1,19 +1,42 @@
-# PIN-IT
+# PIN_IT - Online Bulletin Board
 
-The project aims to provide a centralized space where updates about notices and events can be posted. The Online Bulletin Board offers several features to facilitate effective communication. The platform incorporates a user-friendly interface, enabling students to navigate effortlessly and find relevant information. Additionally, the bulletin board provides a contact directory page for the stakeholders to communicate with each other seamlessly.
+Welcome to PIN_IT, your centralized space for updates and event notifications. This project aims to streamline communication for students and stakeholders.
 
+## About
 
-We acknowledge the collective effort and collaborative spirit of everyone involved, without whom the successful completion of this project would not have been possible. Thank you all for your unwavering support and contributions.
+PIN_IT offers a user-friendly interface, making it easy for students to find relevant information and stay updated. It also provides a seamless contact directory for effective communication among stakeholders.
 
+## Getting Started
 
-We are currently uploading the under developement apk file here 
+To run this project on your local device, follow these steps:
 
-Admin:
- adminUsername - admin@gmail.com
- adminPassword - admin@ait
+### Prerequisites
 
-Student:
- studentUsername - student@gmail.com
- studentPassword - student@ait
+You'll need [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your computer.
 
+### Installation & Running the Project
+
+1. Clone the repository to your local machine:
+
+   ```vscode_Terminal
+   git clone https://github.com/Gourav2609/PIN_IT.git
+2. Navigate to the project directory:
  
+      ```vscode_Terminal
+      cd PIN_IT
+3. Creating a Development Environnment:
+     ```vscode_Terminal
+     npm start
+
+![image](https://github.com/Gourav2609/PIN_IT/assets/115522947/69cd1e5b-3655-497e-849a-ae9d47100175)
+<br>
+
+Scan the image on your Expo Go app on Andriod
+
+Happy hacking
+
+
+### Contributors
+ We welcome contributions from the community to make PIN_IT even better. Feel free to submit issues and pull requests.
+
+Thank you for your support and contributions!
