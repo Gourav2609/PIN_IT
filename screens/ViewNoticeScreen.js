@@ -1,19 +1,16 @@
-// ViewNoticeScreen.js
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { collection, getDocs, query , orderBy } from 'firebase/firestore';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, Linking } from 'react-native';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../Backend/FirebaseConfig';
-import { withNavigation } from 'react-navigation';
-// import { useNavigation } from '@react-navigation/native';
+
 const ViewNoticeScreen = ({ navigation }) => {
   const [notices, setNotices] = useState([]);
-  // const navigation = useNavigation();
+
   useEffect(() => {
     // Fetch notices from Firestore
     const fetchNotices = async () => {
       try {
-        const q = query(collection(db, 'notices'), orderBy('noticeDate', 'desc')); // Correct order of calls
+        const q = query(collection(db, 'notices'), orderBy('noticeDate', 'desc'));
         const querySnapshot = await getDocs(q);
         const noticesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setNotices(noticesData);
@@ -22,19 +19,17 @@ const ViewNoticeScreen = ({ navigation }) => {
         // Handle the error as per your application's requirements
       }
     };
-
+    
     fetchNotices();
 
     const interval = setInterval(() => {
       fetchNotices();
     }, 10000);
     return () => clearInterval(interval);
-
   }, []);
 
   const handleNoticePress = (notice) => {
-    navigation.navigate('NoticeDetail', { notice :item });
-    console.log(notice)
+    navigation.navigate('NoticeDetail', { notice });
   };
 
   return (
@@ -43,19 +38,19 @@ const ViewNoticeScreen = ({ navigation }) => {
         data={notices}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('NoticeDetail', { notice : item})}>
+          <TouchableOpacity onPress={() => handleNoticePress(item)}>
             <View style={styles.noticeContainer}>
               <Text style={styles.noticeTitle}>{item.noticeName}</Text>
               <Text style={styles.noticeID}>Notice ID: {item.noticeID}</Text>
               <Text style={styles.noticeID}>Authorized By: {item.authorizedBy}</Text>
-              {/* <Text style={styles.text}>{item.authorizedBy}</Text> */}
               <Text style={styles.noticeID}>Concerned Faculty: {item.concernedFaculty}</Text>
-              {/* <Text style={styles.text}>{item.concernedFaculty}</Text> */}
-             <Text style={styles.noticeID}>Notice Date: {item.noticeDate}</Text>
-             {/* <Text style={styles.text}>{item.noticeDate}</Text> */}
-             <Text style={styles.noticeID}>Issued For: {item.issuedFor}</Text>
-             {/* <Text style={styles.text}>{item.issuedFor}</Text> */}
-              {/* Render other notice details as needed */}
+              <Text style={styles.noticeID}>Notice Date: {item.noticeDate}</Text>
+              <Text style={styles.noticeID}>Issued For: {item.issuedFor}</Text>
+              {item.fileDownloadURL && (
+                <TouchableOpacity onPress={() => Linking.openURL(item.fileDownloadURL)}>
+                  <Text style={styles.fileLink}>Download File</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </TouchableOpacity>
         )}
@@ -64,7 +59,6 @@ const ViewNoticeScreen = ({ navigation }) => {
   );
 };
 
-// Styles...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -85,9 +79,13 @@ const styles = StyleSheet.create({
   },
   noticeID: {
     fontSize: 16,
-    color:'#d9d9d9',
+    color: '#d9d9d9',
+  },
+  fileLink: {
+    fontSize: 16,
+    color: '#fff',
+    textDecorationLine: 'underline',
   },
 });
 
-// Wrap the component with withNavigation
 export default ViewNoticeScreen;

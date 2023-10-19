@@ -5,6 +5,9 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db , storage } from '../Backend/FirebaseConfig';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 function AddNoticeScreen({navigation}) {
@@ -13,6 +16,9 @@ function AddNoticeScreen({navigation}) {
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [noticeData, setNoticeData] = useState({
     noticeName: '',
     noticeID: '',
@@ -31,22 +37,48 @@ function AddNoticeScreen({navigation}) {
     }
   };
 
+  const showDatepicker = () => {
+    setShowDatePicker(true);
+  };
+  
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setSelectedDate(selectedDate);
+      const formattedDate = selectedDate.toLocaleDateString('en-GB');
+      setNoticeData({ ...noticeData, noticeDate: formattedDate });
+    }
+  };
+  
+
 
   const handleAddNotice = async () => {
-    
     try {
-      // Add notice to Firestore
       setLoading(true);
-      // let downloadUrl = null;
-      // if (uploadedFile) {
-      //   const response = await fetch(uploadedFile.uri);
-      //   const blob = await response.blob();
-      //   const fileName = `notices/${Date.now()}-${uploadedFile.name}`;
-      //   const storageRef = storage.ref().child(fileName);
-      //   await storageRef.put(blob);
-      //   downloadUrl = await storageRef.getDownloadURL();
-      // }
-      await addDoc(collection(db, 'notices'), noticeData );
+  
+      // Upload the file to Firebase Storage if an uploaded file exists
+      let downloadUrl = null;
+      if (uploadedFile) {
+        const response = await fetch(uploadedFile.uri);
+        const blob = await response.blob();
+        const fileName = `notices/${Date.now()}-${uploadedFile.name}`;
+  
+        // Get a reference to the Firebase Storage location
+        const storageRef = ref(storage, fileName);
+  
+        // Upload the file
+        await uploadBytes(storageRef, blob);
+  
+        // Get the download URL of the uploaded file
+        downloadUrl = await getDownloadURL(storageRef);
+      }
+  
+      // Add notice to Firestore with the download URL (if available)
+      await addDoc(collection(db, 'notices'), {
+        ...noticeData,
+        fileDownloadURL: downloadUrl,
+      });
+  
       // Reset notice data and other fields
       setNoticeData({
         noticeName: '',
@@ -58,11 +90,9 @@ function AddNoticeScreen({navigation}) {
         viewedBy: '',
         description: '',
       });
+  
       setUploadedFile(null);
       setToastMessage('Notice was successfully created');
-      // setShowToast(true);
-
-      console.log('Data was successfully sent');
     } catch (error) {
       console.error('Error adding notice to Firestore:', error);
       // Handle the error as per your application's requirements
@@ -70,8 +100,10 @@ function AddNoticeScreen({navigation}) {
       setLoading(false);
       showToastMessage(toastMessage);
       navigation.navigate('ViewNotice');
+      console.log('Notice added successfully');
     }
   };
+  
 
 
   const showToastMessage = (message) => {
@@ -115,10 +147,23 @@ function AddNoticeScreen({navigation}) {
 
         <TextInput
           style={styles.input}
-          placeholder="     Notice Date"
+          placeholder="Notice Date"
           value={noticeData.noticeDate}
           onChangeText={(text) => setNoticeData({ ...noticeData, noticeDate: text })}
+          onFocus={showDatepicker}
         />
+
+        {showDatePicker && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={selectedDate}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={handleDateChange}
+          />
+
+        )}
 
         <TextInput
           style={styles.input}
@@ -282,7 +327,20 @@ const styles = StyleSheet.create({
   buttonText:{
     color:"#fff",
     fontSize:15,
-  }
+  },
+  datePickerButton: {
+    backgroundColor: '#635BFF',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  datePickerButtonText: {
+    color: '#fff',
+    fontSize: 15,
+  },
+  
 });
 
 
